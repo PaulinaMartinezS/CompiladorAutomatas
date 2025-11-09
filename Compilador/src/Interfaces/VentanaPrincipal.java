@@ -8,11 +8,14 @@ import javax.swing.JTextArea;
  * @author pauli
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
-
+    
+    
     public VentanaPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
-        txtConsola.setEditable(true);
+        txtConsola.setEditable(false);
+        txtEscritura.setEditable(true);
+        txtEscritura.setText("1 ");
         System.out.println("Inicio");
     }
 
@@ -22,6 +25,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         txtConsola = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtEscritura = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         mArchivo = new javax.swing.JMenu();
         mGuardar = new javax.swing.JMenuItem();
@@ -36,9 +41,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        txtConsola.setBackground(new java.awt.Color(255, 255, 204));
         txtConsola.setColumns(20);
         txtConsola.setRows(5);
         jScrollPane1.setViewportView(txtConsola);
+
+        txtEscritura.setColumns(20);
+        txtEscritura.setRows(5);
+        txtEscritura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEscrituraKeyReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(txtEscritura);
 
         mArchivo.setText("Archivo");
 
@@ -53,11 +68,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         mCompilar.setText("Compilar");
 
         mAnaLex.setText("Analizador léxico");
-        mAnaLex.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                mAnaLexMouseClicked(evt);
-            }
-        });
         mAnaLex.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 mAnaLexActionPerformed(evt);
@@ -95,39 +105,46 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 191, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mAnaLexMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mAnaLexMouseClicked
-       //me equivoqué de evento xd
-    }//GEN-LAST:event_mAnaLexMouseClicked
-
     private void mAnaLexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAnaLexActionPerformed
         System.out.println("Analisis lexico");
-        //String texto = txtConsola.getText();
-        
+
     }//GEN-LAST:event_mAnaLexActionPerformed
     
-    private void obtenerNumeroLinea(JTextArea tex){
+    private int obtenerNumeroLinea(JTextArea tex){
         //estoy probando esta función
         String texto = tex.getText();
-        int numeroDeLineas = texto.split("\n").length;
-        System.out.println("Número de líneas");
+        int numLinea = 1;
+        numLinea = numLinea+texto.split("\n").length;
+        System.out.println("Número de líneas: "+numLinea);
+        return numLinea;
     }
     
     private void mAnaSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAnaSinActionPerformed
         System.out.println("Analisis sintactico");
         //txtConsola.setEditable(false);
-        
     }//GEN-LAST:event_mAnaSinActionPerformed
+
+    private void txtEscrituraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEscrituraKeyReleased
+        char c = (char) evt.getKeyCode();
+        if (c == evt.VK_ENTER) {
+            System.out.println("Se presiono la letra enter");
+            //txtEscritura.setText(txtEscritura.getText()+"\n"+obtenerNumeroLinea(txtEscritura));
+            txtEscritura.setText(txtEscritura.getText()+" "+obtenerNumeroLinea(txtEscritura)+" ");
+        }
+    }//GEN-LAST:event_txtEscrituraKeyReleased
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -167,6 +184,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuItem mAnaLex;
     private javax.swing.JMenuItem mAnaSin;
     private javax.swing.JMenu mArchivo;
@@ -175,5 +193,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mGuardarComo;
     private javax.swing.JMenu mTS;
     private javax.swing.JTextArea txtConsola;
+    private javax.swing.JTextArea txtEscritura;
     // End of variables declaration//GEN-END:variables
 }
