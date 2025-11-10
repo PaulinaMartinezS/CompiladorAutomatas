@@ -12,10 +12,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     public VentanaPrincipal() {
         initComponents();
+        NumeroDeLinea tln = new NumeroDeLinea(txtEscritura);
+        jScrollPane2.setRowHeaderView(tln);
         this.setLocationRelativeTo(null);
         txtConsola.setEditable(false);
         txtEscritura.setEditable(true);
-        txtEscritura.setText("1 ");
         System.out.println("Inicio");
     }
 
@@ -123,14 +124,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_mAnaLexActionPerformed
     
-    private int obtenerNumeroLinea(JTextArea tex){
+    /*private int obtenerNumeroLinea(JTextArea tex){
         //estoy probando esta función
         String texto = tex.getText();
         int numLinea = 1;
         numLinea = numLinea+texto.split("\n").length;
         System.out.println("Número de líneas: "+numLinea);
         return numLinea;
-    }
+    }*/
     
     private void mAnaSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAnaSinActionPerformed
         System.out.println("Analisis sintactico");
@@ -142,7 +143,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         if (c == evt.VK_ENTER) {
             System.out.println("Se presiono la letra enter");
             //txtEscritura.setText(txtEscritura.getText()+"\n"+obtenerNumeroLinea(txtEscritura));
-            txtEscritura.setText(txtEscritura.getText()+" "+obtenerNumeroLinea(txtEscritura)+" ");
+            txtEscritura.setText(txtEscritura.getText());
         }
     }//GEN-LAST:event_txtEscrituraKeyReleased
 
