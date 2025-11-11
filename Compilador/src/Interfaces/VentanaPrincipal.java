@@ -1,6 +1,9 @@
 
 package Interfaces;
-
+import Interfaces.AnalizadorLexico;
+import Interfaces.VentanaLexico;
+import Interfaces.Token;
+import java.util.ArrayList;
 import javax.swing.JTextArea;
 
 /**
@@ -9,6 +12,7 @@ import javax.swing.JTextArea;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
     
+    private AnalizadorLexico analizadorLexico;
     
     public VentanaPrincipal() {
         initComponents();
@@ -17,6 +21,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         txtConsola.setEditable(false);
         txtEscritura.setEditable(true);
+        analizadorLexico = new AnalizadorLexico();
         System.out.println("Inicio");
     }
 
@@ -120,7 +125,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void mAnaLexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAnaLexActionPerformed
-        System.out.println("Analisis lexico");
+                                      
+    txtConsola.setText("Iniciando Análisis Léxico...\n");
+    String codigoFuente = txtEscritura.getText();
+    
+    if (codigoFuente.trim().isEmpty()) {
+        txtConsola.append("Error: No hay código para analizar.");
+        return;
+    }
+
+    // Ejecutar el Analizador Léxico
+    // Asegúrate de que tu 'analizadorLexico' esté inicializado
+    ArrayList<Token> tokens = analizadorLexico.analizar(codigoFuente);
+
+    VentanaLexico ventana = new VentanaLexico(tokens);
+    ventana.mostrar();
+    
+    txtConsola.append("Análisis Léxico completado. Resultados mostrados en la nueva ventana.");
 
     }//GEN-LAST:event_mAnaLexActionPerformed
     
